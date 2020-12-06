@@ -1,5 +1,12 @@
 version: "3.4"
 services: 
+  db:
+    container_name: mongodb
+    image: mongo:4.2.5
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./.data:/data/db
   api:
     container_name: api
     image: ama/api:1.0.0
@@ -22,13 +29,6 @@ services:
       - 9229:9229            #debug port
     depends_on: 
       [db]
-  db:
-    container_name: mongodb
-    image: mongo:4.2.5
-    ports:
-      - "27018:27017"
-    volumes:
-      - ./.data:/data/db
   web:
     container_name: web
     image: ama/web:1.0.0
@@ -43,9 +43,11 @@ services:
       target: web_debug
     stdin_open: true
     volumes:
-    - ./web/src/:/app/src/
-    - ./web/public/:/app/public/
+    - ../ama-web/src/:/app/src/
+    - ../ama-web/public/:/app/public/
     working_dir: /app
     ports:
       - 3000:3000
       - 9222:9222    
+    depends_on: 
+      [api]

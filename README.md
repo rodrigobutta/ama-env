@@ -8,3 +8,5 @@
 1) Run Docker (Docker Hub)
 2) `fig up -d`
 3) Check progress with `fig logs -f`
+
+### Run & Test endpoints, check respective README
